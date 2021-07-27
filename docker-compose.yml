@@ -1,0 +1,36 @@
+version: '3.1'
+
+services:
+
+  # Use root/example as user/password credentials
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      - 3306:3306
+
+  python:
+    image: python:3.8
+    command:
+      - "./wait-for-it.sh"
+      - "db:3306"
+      - "--"
+      - "./start.sh"
+
+    working_dir: /usr/src/myapp
+    volumes:
+      - ./:/usr/src/myapp
+    depends_on:
+      - db
+
+  haproxy:
+    image: haproxy:2.4
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    depends_on:
+      - db
+    ports:
+      - 9001:9001
+      - 19001:19001
