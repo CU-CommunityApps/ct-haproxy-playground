@@ -26,6 +26,21 @@ services:
     depends_on:
       - db
 
+  client2:
+    image: python:3.8
+    command:
+      - "./wait-for-it.sh"
+      - "db:3306"
+      - "--"
+      - "./start.sh"
+    environment:
+      DB_HOST: haproxy24
+    working_dir: /usr/src/myapp
+    volumes:
+      - ./:/usr/src/myapp
+    depends_on:
+      - db
+
   haproxy24:
     build: .
     command: haproxy -W -db -f /usr/local/etc/haproxy/haproxy.cfg -p /var/run/haproxy/haproxy.pid -x /var/run/haproxy/haproxy.sock
