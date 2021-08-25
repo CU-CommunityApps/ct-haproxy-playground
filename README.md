@@ -145,3 +145,12 @@ curl -X POST --user admin:mypassword \
     "http://localhost:5555/v2/services/haproxy/configuration/raw?skip_version=true"
 
 ```
+
+## References
+
+- https://www.haproxy.com/blog/hitless-reloads-with-haproxy-howto/
+- https://www.haproxy.com/blog/truly-seamless-reloads-with-haproxy-no-more-hacks/
+- https://www.haproxy.com/blog/dynamic-scaling-for-microservices-with-runtime-api/
+- https://www.haproxy.com/blog/dynamic-configuration-haproxy-runtime-api/
+- https://www.haproxy.com/documentation/hapee/2-2r1/api/data-plane-api/
+- https://github.com/haproxytech/dataplaneapi/blob/master/configuration/examples/example-full.hcl
