@@ -11,26 +11,27 @@ services:
     ports:
       - 3306:3306
 
-  python:
+  client1:
     image: python:3.8
     command:
       - "./wait-for-it.sh"
       - "db:3306"
       - "--"
       - "./start.sh"
-
+    environment:
+      DB_HOST: haproxy24
     working_dir: /usr/src/myapp
     volumes:
       - ./:/usr/src/myapp
     depends_on:
       - db
 
-  haproxy:
-    image: haproxy:2.4
+  haproxy24:
+    build: .
+    command: haproxy -W -db -f /usr/local/etc/haproxy/haproxy.cfg -p /var/run/haproxy/haproxy.pid -x /var/run/haproxy/haproxy.sock
     volumes:
-      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
-    depends_on:
-      - db
+      - ./usr-local-etc-haproxy:/usr/local/etc/haproxy
     ports:
-      - 9001:9001
-      - 19001:19001
+      - 9001:8080
+      - 19001:9000
+      - 5555:5555

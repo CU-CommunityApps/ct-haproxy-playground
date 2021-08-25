@@ -2,5 +2,5 @@
 #
 # Install pymysql and then run the script.
 
-pip install pymysql
+pip --quiet --disable-pip-version-check install pymysql
 python connect.py
