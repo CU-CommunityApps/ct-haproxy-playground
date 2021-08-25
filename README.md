@@ -70,6 +70,20 @@ $ docker-compose exec --user root haproxy24 bash
 root@610c089aecdd:/#
 ```
 
+### Count the number of actual active frontend and backend sessions
+
+```
+# ... inside the container
+
+# Frontend (8080)
+$ netstat --numeric --inet | grep 8080 | wc -l
+2
+
+# Backend (3306)
+$ netstat --numeric --inet | grep 3306 | wc -l
+2
+```
+
 ### Interact with HAProxy socket (Runtime API)
 
 ```
